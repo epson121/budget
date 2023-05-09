@@ -1,0 +1,14 @@
+
+###> symfony/framework-bundle ###
+budget/.env.local
+budget/.env.local.php
+budget/.env.*.local
+budget/config/secrets/prod/prod.decrypt.private.php
+budget/public/bundles/
+budget/var/
+budget/vendor/
+###< symfony/framework-bundle ###
+
+###> lexik/jwt-authentication-bundle ###
+budget/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
