@@ -7,7 +7,9 @@ register:
     controller: App\Controller\UserController::register
     methods: [POST]
 
-categories:
-    path: /api/categories
-    controller: App\Controller\CategoriesController::index
-    methods: [GET, POST, PUT, DELETE]
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+        prefix: api/
+    type: attribute
