@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Service\CategoryService;
 use App\Service\TransactionService;
 use App\Validators\CategoryValidator;
+use App\Event\TransactionCreatedEvent;
+use App\Event\TransactionDeletedEvent;
 use App\Repository\CategoryRepository;
 use App\Validators\TransactionValidator;
 use App\Repository\TransactionRepository;
@@ -12,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -50,7 +53,8 @@ class TransactionsController extends AbstractController
 
     #[Route('/api/transactions/{id}', name: 'api_transactions_delete', methods: ["DELETE"])]
     public function delete(
-        string $id
+        string $id,
+        EventDispatcherInterface $eventDispatcher
     ): JsonResponse {
 
         $transaction = $this->transactionRepository->findOneBy(['id' => $id]);
@@ -59,8 +63,10 @@ class TransactionsController extends AbstractController
             return $this->json(['message' => 'Transaction with given ID does not exist.'], Response::HTTP_UNAUTHORIZED);
         }
 
-        // todo: when removing, need to update budget
         $this->transactionRepository->remove($transaction, true);
+
+        $event = new TransactionDeletedEvent($transaction);
+        $eventDispatcher->dispatch($event, TransactionDeletedEvent::NAME);
 
         return $this->json(
             [
@@ -152,7 +158,8 @@ class TransactionsController extends AbstractController
         Request $request,
         TransactionValidator $validator,
         TransactionService $transactionService,
-        CategoryRepository $categoryRepository
+        CategoryRepository $categoryRepository,
+        EventDispatcherInterface $eventDispatcher
     ): JsonResponse {
 
         $amount = $request->get('amount', '');
@@ -183,6 +190,9 @@ class TransactionsController extends AbstractController
             $type,
             $amount
         );
+
+        $event = new TransactionCreatedEvent($transaction);
+        $eventDispatcher->dispatch($event, TransactionCreatedEvent::NAME);
 
         return $this->json(
             [

@@ -51,6 +51,10 @@ class CategoriesController extends AbstractController
             return $this->json(['message' => 'Category with given ID does not exist.']);
         }
 
+        if (!$category->getTransactions()->isEmpty()) {
+            return $this->json(['message' => 'Category has transactions, and can not be removed. Please delete transactions first.']);
+        }
+
         $this->categoryRepository->remove($category, true);
 
         return $this->json(

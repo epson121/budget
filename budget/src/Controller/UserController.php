@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Service\UserService;
 use App\Event\UserCreatedEvent;
 use App\Validators\UserValidator;
@@ -51,6 +52,22 @@ class UserController extends AbstractController
                 'message' => 'Successfully created user. You can now log in to obtain access token.',
                 'id' => $user->getId(),
                 'username' => $user->getUsername()
+            ],
+            Response::HTTP_CREATED
+        );
+    }
+
+    #[Route('/api/user/status', name: 'api_user_status')]
+    public function status(): JsonResponse {
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        return $this->json(
+            [
+                'id' => $user->getId(),
+                'username' => $user->getUsername(),
+                'balance' => $user->getBalance()
             ],
             Response::HTTP_CREATED
         );

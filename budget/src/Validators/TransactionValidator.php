@@ -18,8 +18,6 @@ class TransactionValidator {
      */
     public function validateTransactionData($data): ?ConstraintViolationInterface
     {
-
-        var_dump($data);
         
         $validator = Validation::createValidator();
 
