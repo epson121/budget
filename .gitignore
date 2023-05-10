@@ -12,3 +12,4 @@ budget/vendor/
 ###> lexik/jwt-authentication-bundle ###
 budget/config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
+.vscode
