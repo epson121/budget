@@ -45,7 +45,7 @@ class CategoriesController extends AbstractController
         string $id
     ): JsonResponse {
 
-        $category = $this->categoryRepository->findOneBy(['id' => $id]);
+        $category = $this->categoryRepository->findOneBy(['id' => $id, 'user' => $this->getUser()]);
 
         if (!$category) {
             return $this->json(['message' => 'Category with given ID does not exist.']);
@@ -67,7 +67,7 @@ class CategoriesController extends AbstractController
         CategoryValidator $validator,
         Request $request
     ): JsonResponse {
-        $category = $this->categoryRepository->findOneBy(['id' => $id]);
+        $category = $this->categoryRepository->findOneBy(['id' => $id, 'user' => $this->getUser()]);
 
         if (!$category) {
             return $this->json(['message' => 'Category with given ID does not exist.']);
@@ -99,7 +99,7 @@ class CategoriesController extends AbstractController
     #[Route('/api/categories', name: 'api_categories_get_all', methods: ["GET"])]
     public function getAll(): JsonResponse {
 
-        $categories = $this->categoryRepository->findAll();
+        $categories = $this->categoryRepository->findBy(['user' => $this->getUser()]);
         $data = [];
 
         foreach ($categories as $category) {
@@ -134,11 +134,11 @@ class CategoriesController extends AbstractController
             return $this->json(['error' => $error->getMessage()], Response::HTTP_UNAUTHORIZED);
         }
 
-        if ($categoryService->checkCategoryExists($name)) {
+        if ($categoryService->checkCategoryExists($name, $this->getUser())) {
             return $this->json(['error' => 'This category already exist'], Response::HTTP_UNAUTHORIZED);
         }
 
-        $category = $categoryService->createCategory($name);
+        $category = $categoryService->createCategory($name, $this->getUser());
 
         return $this->json(
             [

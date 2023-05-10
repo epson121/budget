@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Service\UserService;
+use App\Event\UserCreatedEvent;
 use App\Validators\UserValidator;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
@@ -18,7 +19,8 @@ class UserController extends AbstractController
     public function register(
         Request $request,
         UserValidator $userValidator,
-        UserService $userService
+        UserService $userService,
+        EventDispatcherInterface $eventDispatcher
     ): JsonResponse {
 
         $username = $request->get('username', '');
@@ -40,6 +42,9 @@ class UserController extends AbstractController
         }
 
         $user = $userService->createUser($username, $password);
+
+        $event = new UserCreatedEvent($user);
+        $eventDispatcher->dispatch($event, UserCreatedEvent::NAME);
 
         return $this->json(
             [

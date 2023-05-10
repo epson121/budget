@@ -36,6 +36,7 @@ class UserService {
         $user = new User();
         $user->setPassword($this->passwordHasher->hashPassword($user, $password));
         $user->setUsername($username);
+        $user->setBalance(User::DEFAULT_BALANCE);
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
