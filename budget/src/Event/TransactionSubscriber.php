@@ -18,7 +18,8 @@ class TransactionSubscriber implements EventSubscriberInterface
     {
         return [
             TransactionCreatedEvent::NAME => 'onTransactionCreated',
-            TransactionDeletedEvent::NAME => 'onTransactionDeleted'
+            TransactionDeletedEvent::NAME => 'onTransactionDeleted',
+            TransactionUpdatedEvent::NAME => 'onTransactionUpdated'
         ];
     }
 
@@ -48,6 +49,40 @@ class TransactionSubscriber implements EventSubscriberInterface
             $balance -= $transaction->getAmount();
         } else if ($transaction->getType() == Transaction::TYPE_EXPENSE) {
             $balance += $transaction->getAmount();
+        }
+
+        $user->setBalance($balance);
+        $this->userRepository->save($user, true);
+    }
+
+    public function onTransactionUpdated(
+        TransactionUpdatedEvent $event
+    ) {
+        $oldTransaction = $event->getOldTransaction();
+        $newTransaction = $event->getNewTransaction();
+        $user = $newTransaction->getUser();
+        $balance = $user->getBalance();
+
+        $oldAmount = $oldTransaction->getAmount();
+        $newAmount = $newTransaction->getAmount();
+
+        if ($oldTransaction->getType() != $newTransaction->getType()) {
+            
+            if ($newTransaction->getType() == Transaction::TYPE_DEPOSIT) {
+                $balance += $oldAmount;
+                $balance += $newAmount;
+            } else {
+                $balance -= $oldAmount;
+                $balance -= $newAmount;
+            }
+        } else {
+            if ($newTransaction->getType() == Transaction::TYPE_DEPOSIT) {
+                $balance -= $oldAmount;
+                $balance += $newAmount;
+            } else {
+                $balance += $oldAmount;
+                $balance -= $newAmount;
+            }
         }
 
         $user->setBalance($balance);

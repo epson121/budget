@@ -7,6 +7,7 @@ use App\Service\TransactionService;
 use App\Validators\CategoryValidator;
 use App\Event\TransactionCreatedEvent;
 use App\Event\TransactionDeletedEvent;
+use App\Event\TransactionUpdatedEvent;
 use App\Repository\CategoryRepository;
 use App\Validators\TransactionValidator;
 use App\Repository\TransactionRepository;
@@ -82,6 +83,7 @@ class TransactionsController extends AbstractController
         TransactionRepository $transactionRepository,
         TransactionValidator $validator,
         CategoryRepository $categoryRepository,
+        EventDispatcherInterface $eventDispatcher,
         Request $request
     ): JsonResponse {
 
@@ -94,7 +96,7 @@ class TransactionsController extends AbstractController
         $amount = $request->get('amount') ?? $transaction->getAmount();
         $type = $request->get('type') ?? $transaction->getType();
         $createdAt = $request->get('created_at') ?? $transaction->getCreatedAt()->format('Y-m-d H:i:s');
-        $categoryId = $request->get('category');
+        $categoryId = $request->get('category') ?? $transaction->getCategory()->getId();
 
         $error = $validator->validateTransactionData([
             'amount' => $amount,
@@ -106,11 +108,13 @@ class TransactionsController extends AbstractController
             return $this->json(['error' => $error->getMessage()], Response::HTTP_UNAUTHORIZED);
         }
 
-        $category = $categoryRepository->findOneBy(['id' => $categoryId]);
+        $category = $categoryRepository->findOneBy(['id' => $categoryId, 'user' => $this->getUser()]);
 
         if (!$category) {
             return $this->json(['message' => 'Category with given ID does not exist.'], Response::HTTP_UNAUTHORIZED);
         }
+
+        $oldTransaction = clone $transaction;
 
         $transaction->setAmount($amount);
         $transaction->setCreatedAt(new \DateTimeImmutable($createdAt));
@@ -118,6 +122,9 @@ class TransactionsController extends AbstractController
         $transaction->setType($type);
 
         $transactionRepository->save($transaction, true);
+
+        $event = new TransactionUpdatedEvent($oldTransaction, $transaction);
+        $eventDispatcher->dispatch($event, TransactionUpdatedEvent::NAME);
 
         return $this->json(
             [
