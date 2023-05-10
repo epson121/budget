@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "575ac7e37bb2580001cad8f03db6643d",
+    "content-hash": "3a3f23cb552e99c7e6901d9a2326d9c1",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -1572,6 +1572,62 @@
                 }
             ],
             "time": "2023-05-06T15:58:15+00:00"
+        },
+        {
+            "name": "maldoinc/doctrine-filter",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maldoinc/doctrine-filter.git",
+                "reference": "f665acb6acde048e9a4a17a5416874614d076715"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maldoinc/doctrine-filter/zipball/f665acb6acde048e9a4a17a5416874614d076715",
+                "reference": "f665acb6acde048e9a4a17a5416874614d076715",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "^2",
+                "php": "^7.4|^8"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "3.*",
+                "phpstan/phpstan": "^1.9",
+                "phpunit/phpunit": "^9",
+                "symfony/cache": "5.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Maldoinc\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Emirald Mateli",
+                    "email": "aldo.mateli@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Quickly add advanced filtering/searching and sorting capabilities to any resource in your APIs or Web apps that use Doctrine.",
+            "homepage": "https://github.com/maldoinc/doctrine-filter",
+            "keywords": [
+                "doctrine",
+                "doctrine-orm",
+                "rest",
+                "rest-api",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/maldoinc/doctrine-filter/issues",
+                "source": "https://github.com/maldoinc/doctrine-filter/tree/v1.1.0"
+            },
+            "time": "2022-12-04T14:35:12+00:00"
         },
         {
             "name": "namshi/jose",

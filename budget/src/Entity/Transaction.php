@@ -2,8 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\TransactionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TransactionRepository;
+use Maldoinc\Doctrine\Filter\Provider\PresetFilterProvider;
+use Maldoinc\Doctrine\Filter\Annotation\Expose as FilterExpose;
 
 #[ORM\Entity(repositoryClass: TransactionRepository::class)]
 class Transaction
@@ -19,16 +21,20 @@ class Transaction
 
     #[ORM\ManyToOne(inversedBy: 'transactions')]
     #[ORM\JoinColumn(nullable: false)]
+    #[FilterExpose(operators: [PresetFilterProvider::EQ], serializedName: 'user_id')]
     private ?User $user = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
+    #[FilterExpose(operators: [PresetFilterProvider::EQ], serializedName: 'category_id')]
     private ?Category $category = null;
 
     #[ORM\Column]
+    #[FilterExpose(operators: [PresetFilterProvider::EQ, PresetFilterProvider::GT, PresetFilterProvider::LT])]
     private ?float $amount = null;
 
     #[ORM\Column]
+    #[FilterExpose(operators: [PresetFilterProvider::GT, PresetFilterProvider::LT, PresetFilterProvider::EQ])]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column(length: 20)]

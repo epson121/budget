@@ -129,17 +129,29 @@ class TransactionsController extends AbstractController
     }
 
     #[Route('/api/transactions', name: 'api_transactions_get_all', methods: ["GET"])]
-    public function getAll(): JsonResponse {
+    public function getAll(
+        TransactionService $transactionService,
+        Request $request
+    ): JsonResponse {
 
-        // todo get criteria
-        $transactions = $this->transactionRepository->findBy(['user' => $this->getUser()]);
         $data = [];
+
+        /** @var User $user */
+        $user = $this->getUser();
+        $requestQuery = $request->query->all();
+        
+        $requestQuery['user_id'] = ['eq' => $user->getId()];
+
+        $qb = $this->transactionRepository->createQueryBuilder('t');
+
+        $transactions = $transactionService->filterTransactions($qb, $requestQuery);
 
         foreach ($transactions as $transaction) {
             $data[] = [
                 'id' => $transaction->getId(),
                 'name' => $transaction->getAmount(),
                 'created_at' => $transaction->getCreatedAt(),
+                'amount' => $transaction->getAmount(),
                 'category' => [
                     'id' => $transaction->getCategory()->getId(),
                     'name' => $transaction->getCategory()->getName()
@@ -177,7 +189,7 @@ class TransactionsController extends AbstractController
             return $this->json(['error' => $error->getMessage()], Response::HTTP_UNAUTHORIZED);
         }
 
-        $category = $categoryRepository->findOneBy(['id' => $categoryId]);
+        $category = $categoryRepository->findOneBy(['id' => $categoryId, 'user' => $this->getUser()]);
 
         if (!$category) {
             return $this->json(['message' => 'Category with given ID does not exist.'], Response::HTTP_UNAUTHORIZED);
