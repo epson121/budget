@@ -34,7 +34,13 @@ class Transaction
     private ?float $amount = null;
 
     #[ORM\Column]
-    #[FilterExpose(operators: [PresetFilterProvider::GT, PresetFilterProvider::LT, PresetFilterProvider::EQ])]
+    #[FilterExpose(operators: [
+        PresetFilterProvider::GT,
+        PresetFilterProvider::GTE,
+        PresetFilterProvider::LT,
+        PresetFilterProvider::LTE,
+        PresetFilterProvider::EQ
+    ])]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column(length: 20)]

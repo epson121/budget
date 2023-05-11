@@ -61,7 +61,43 @@ class TransactionService {
         return $transaction;
     }
 
-    public function filterTransactions(QueryBuilder $queryBuilder, $requestQuery)
+    /**
+     * @return array
+     */
+    public function getTransactionSummary(array $transactions) {
+        
+        $expenseTransactions = array_filter($transactions, function($tx) {
+            return $tx->getType() == Transaction::TYPE_EXPENSE;
+        }) ?? [];
+
+        $depositTransactions = array_filter($transactions, function($tx) {
+            return $tx->getType() == Transaction::TYPE_DEPOSIT;
+        }) ?? [];
+
+        $expenseTotal = array_reduce($expenseTransactions, function($total, $tx) {
+            return $total += $tx->getAmount();
+        }, 0);
+
+        $depositTotal = array_reduce($depositTransactions, function($total, $tx) {
+            return $total += $tx->getAmount();
+        }, 0);
+
+        return [
+            'tx_count' => [
+                'expense' => count($expenseTransactions),
+                'deposit' => count($depositTransactions)
+            ],
+            'tx_total' => [
+                'expense' => $expenseTotal,
+                'deposit' => $depositTotal
+            ]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function filterTransactions(QueryBuilder $queryBuilder, $requestQuery) : array
     {
         $fieldReader = new ExposedFieldsReader(new NativeAttributeReader());
 
@@ -70,7 +106,7 @@ class TransactionService {
             data: $requestQuery,
             
             // The key under which to look for sorting actions
-            orderByKey: 'orderBy', 
+            orderByKey: 'orderBy',
             
             simpleEquality: true 
         );

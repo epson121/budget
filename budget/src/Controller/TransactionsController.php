@@ -151,7 +151,13 @@ class TransactionsController extends AbstractController
 
         $qb = $this->transactionRepository->createQueryBuilder('t');
 
-        $transactions = $transactionService->filterTransactions($qb, $requestQuery);
+        try {
+            $transactions = $transactionService->filterTransactions($qb, $requestQuery);
+        } catch (\Exception $e) {
+            return $this->json([
+                'error' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
 
         foreach ($transactions as $transaction) {
             $data[] = [

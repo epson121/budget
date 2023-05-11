@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Service\UserService;
 use App\Event\UserCreatedEvent;
+use App\Repository\TransactionRepository;
+use App\Service\TransactionService;
 use App\Validators\UserValidator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,6 +71,43 @@ class UserController extends AbstractController
                 'username' => $user->getUsername(),
                 'balance' => $user->getBalance()
             ],
+            Response::HTTP_CREATED
+        );
+    }
+
+    #[Route('/api/user/summary', name: 'api_user_summary')]
+    public function summary(
+        TransactionRepository $transactionRepository,
+        TransactionService $transactionService,
+        Request $request
+    ): JsonResponse {
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        $requestQuery = $request->query->all();
+
+        // only filter by created_at
+        foreach($requestQuery as $k => $v) {
+            if ($k !== 'created_at') {
+                unset($requestQuery[$k]);
+            }
+        }
+        
+        $requestQuery['user_id'] = ['eq' => $user->getId()];
+        $qb = $transactionRepository->createQueryBuilder('t');
+        try {
+            $transactions = $transactionService->filterTransactions($qb, $requestQuery);
+            $summary = $transactionService->getTransactionSummary($transactions);
+        } catch (\Exception $e) {
+            return $this->json([
+                'error' => $e->getMessage()
+            ], Response::HTTP_BAD_REQUEST);
+        }
+        
+
+        return $this->json(
+            $summary,
             Response::HTTP_CREATED
         );
     }
