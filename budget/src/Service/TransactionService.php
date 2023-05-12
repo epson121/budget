@@ -43,7 +43,8 @@ class TransactionService {
         Category $category,
         string $createdAt,
         string $type,
-        string $amount
+        string $amount,
+        string $description
     ): Transaction {
 
         $transaction = new Transaction();
@@ -54,6 +55,7 @@ class TransactionService {
         $transaction->setCreatedAt($createdAt);
         $transaction->setAmount($amount);
         $transaction->setType($type);
+        $transaction->setDescription($description);
 
         $this->entityManager->persist($transaction);
         $this->entityManager->flush();

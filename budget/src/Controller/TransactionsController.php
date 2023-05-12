@@ -67,6 +67,8 @@ class TransactionsController extends AbstractController
                 'id' => $transaction->getId(),
                 'name' => $transaction->getAmount(),
                 'created_at' => $transaction->getCreatedAt(),
+                'amount' => $transaction->getAmount(),
+                'description' => $transaction->getDescription(),
                 'category' => [
                     'id' => $transaction->getCategory()->getId(),
                     'name' => $transaction->getCategory()->getName()
@@ -159,6 +161,10 @@ class TransactionsController extends AbstractController
      *                     type="string",
      *                     format="datetime"
      *                 ),
+     *                 @OA\Property(
+     *                     property="description",
+     *                     type="string"
+     *                 ),
      *                 example={"type": "deposit", "amount": "120.20"}
      *             )
      *         )
@@ -194,6 +200,7 @@ class TransactionsController extends AbstractController
         $amount = $request->get('amount') ?? $transaction->getAmount();
         $type = $request->get('type') ?? $transaction->getType();
         $createdAt = $request->get('created_at') ?? $transaction->getCreatedAt()->format('Y-m-d H:i:s');
+        $description = $request->get('description') ?? $transaction->getDescription();
         $categoryId = $request->get('category') ?? $transaction->getCategory()->getId();
 
         $error = $validator->validateTransactionData([
@@ -217,6 +224,7 @@ class TransactionsController extends AbstractController
         $transaction->setAmount($amount);
         $transaction->setCreatedAt(new \DateTimeImmutable($createdAt));
         $transaction->setCategory($category);
+        $transaction->setDescription($description);
         $transaction->setType($type);
 
         $transactionRepository->save($transaction, true);
@@ -332,7 +340,8 @@ class TransactionsController extends AbstractController
                     'id' => $transaction->getCategory()->getId(),
                     'name' => $transaction->getCategory()->getName()
                 ],
-                'type' => $transaction->getType()
+                'type' => $transaction->getType(),
+                'description' => $transaction->getDescription()
             ];
         }
 
@@ -368,7 +377,11 @@ class TransactionsController extends AbstractController
      *                     type="string",
      *                     format="datetime"
      *                 ),
-     *                 example={"type": "expense", "amount": "120.20", "category": 10, "created_at": "2023-05-11 08:00:00"}
+     *                 @OA\Property(
+     *                     property="description",
+     *                     type="string"
+     *                 ),
+     *                 example={"type": "expense", "amount": "120.20", "category": 10, "created_at": "2023-05-11 08:00:00", "description": "food"}
      *             )
      *         )
      *     ),
@@ -394,6 +407,7 @@ class TransactionsController extends AbstractController
         $type = $request->get('type', '');
         $createdAt = $request->get('created_at', '') ;
         $categoryId = $request->get('category', '');
+        $description = $request->get('description', '');
 
         $error = $validator->validateTransactionData([
             'amount' => $amount,
@@ -416,7 +430,8 @@ class TransactionsController extends AbstractController
             $category,
             $createdAt,
             $type,
-            $amount
+            $amount,
+            $description
         );
 
         $event = new TransactionCreatedEvent($transaction);
