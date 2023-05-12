@@ -44,6 +44,7 @@ class Transaction
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column(length: 20)]
+    #[FilterExpose(operators: [PresetFilterProvider::EQ])]
     private ?string $type = null;
 
     public function getId(): ?int

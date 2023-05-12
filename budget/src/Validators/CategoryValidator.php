@@ -3,6 +3,7 @@
 namespace App\Validators;
 
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\ConstraintViolationInterface;
@@ -21,7 +22,7 @@ class CategoryValidator {
         $lengthConstraint = new Length(['max' => 50]);
         $lengthConstraint->maxMessage = 'Name value should have at most {{ limit }} characters.';
 
-        $alphanumConstraint = new Type("alnum", 'Name should be an alphanumeric value');
+        $alphanumConstraint = new Regex("/[a-zA-z0-9\s]*/", "Name should be an alphanumeric value");
 
         $categoryDataConstraint = new Collection([
             'name' => [$alphanumConstraint, $lengthConstraint]

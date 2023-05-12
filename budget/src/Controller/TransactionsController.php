@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use OpenApi\Annotations as OA;
 
 
 class TransactionsController extends AbstractController
@@ -28,6 +29,29 @@ class TransactionsController extends AbstractController
     
 
     #[Route('/api/transactions/{id}', name: 'api_transactions_get', methods: ["GET"])]
+    /**
+     * @OA\Get(
+     *     summary="Gets transaction information",
+     *     description="Gets transaction information",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Transaction Id",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success"
+     *     )
+     * )
+     */
     public function get(
         string $id
     ): JsonResponse {
@@ -35,7 +59,7 @@ class TransactionsController extends AbstractController
         $transaction = $this->transactionRepository->findOneBy(['id' => $id, 'user' => $this->getUser()]);
 
         if (!$transaction) {
-            return $this->json(['message' => 'Transaction with given ID does not exist.'], Response::HTTP_UNAUTHORIZED);
+            return $this->json(['message' => 'Transaction with given ID does not exist.'], Response::HTTP_BAD_REQUEST);
         }
         
         return $this->json(
@@ -53,6 +77,29 @@ class TransactionsController extends AbstractController
     }
 
     #[Route('/api/transactions/{id}', name: 'api_transactions_delete', methods: ["DELETE"])]
+    /**
+     * @OA\Delete(
+     *     summary="Delete transaction",
+     *     description="Delete transaction",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Transaction Id",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid ID supplied"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success"
+     *     )
+     * )
+     */
     public function delete(
         string $id,
         EventDispatcherInterface $eventDispatcher
@@ -61,7 +108,7 @@ class TransactionsController extends AbstractController
         $transaction = $this->transactionRepository->findOneBy(['id' => $id]);
 
         if (!$transaction) {
-            return $this->json(['message' => 'Transaction with given ID does not exist.'], Response::HTTP_UNAUTHORIZED);
+            return $this->json(['message' => 'Transaction with given ID does not exist.'], Response::HTTP_BAD_REQUEST);
         }
 
         $this->transactionRepository->remove($transaction, true);
@@ -78,6 +125,54 @@ class TransactionsController extends AbstractController
     }
 
     #[Route('/api/transactions/{id}', name: 'api_transactions_update', methods: ["PUT"])]
+    /**
+     * @OA\Put(
+     *     summary="Updates a transaction",
+     *     description="Updates a transaction",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="Transaction Id",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer"
+     *         )
+     *     ),
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="type",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="category",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="amount",
+     *                     type="number"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="created_at",
+     *                     type="string",
+     *                     format="datetime"
+     *                 ),
+     *                 example={"type": "deposit", "amount": "120.20"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request"
+     *     )
+     * )
+     */
     public function update(
         string $id,
         TransactionRepository $transactionRepository,
@@ -90,7 +185,10 @@ class TransactionsController extends AbstractController
         $transaction = $transactionRepository->findOneBy(['id' => $id, 'user' => $this->getUser()]);
 
         if (!$transaction) {
-            return $this->json(['message' => 'Transaction with given ID does not exist.']);
+            return $this->json(
+                ['message' => 'Transaction with given ID does not exist.'],
+                Response::HTTP_BAD_REQUEST
+            );
         }
 
         $amount = $request->get('amount') ?? $transaction->getAmount();
@@ -105,13 +203,13 @@ class TransactionsController extends AbstractController
         ]);
 
         if ($error) {
-            return $this->json(['error' => $error->getMessage()], Response::HTTP_UNAUTHORIZED);
+            return $this->json(['error' => $error->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         $category = $categoryRepository->findOneBy(['id' => $categoryId, 'user' => $this->getUser()]);
 
         if (!$category) {
-            return $this->json(['message' => 'Category with given ID does not exist.'], Response::HTTP_UNAUTHORIZED);
+            return $this->json(['message' => 'Category with given ID does not exist.'], Response::HTTP_BAD_REQUEST);
         }
 
         $oldTransaction = clone $transaction;
@@ -136,6 +234,71 @@ class TransactionsController extends AbstractController
     }
 
     #[Route('/api/transactions', name: 'api_transactions_get_all', methods: ["GET"])]
+    /**
+     * @OA\Get(
+     *     summary="Gets category information",
+     *     description="Gets category information",
+     *     @OA\Parameter(
+     *         name="created_at",
+     *         in="query",
+     *         description="Created at",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="created_at",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     example={"gte":"2022-05-11"}
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="type",
+     *         in="query",
+     *         description="Type",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="type",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     example={"eq":"expense"}
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="orderBy",
+     *         in="query",
+     *         description="Order by",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="orderBy",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     example={"amount":"desc"}
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request"
+     *     )
+     * )
+     */
     public function getAll(
         TransactionService $transactionService,
         Request $request
@@ -168,7 +331,8 @@ class TransactionsController extends AbstractController
                 'category' => [
                     'id' => $transaction->getCategory()->getId(),
                     'name' => $transaction->getCategory()->getName()
-                ]
+                ],
+                'type' => $transaction->getType()
             ];
         }
 
@@ -179,6 +343,45 @@ class TransactionsController extends AbstractController
     }
 
     #[Route('/api/transactions', name: 'api_transactions_create', methods: ["POST"])]
+    /**
+     * @OA\Post(
+     *     summary="Creates a transaction",
+     *     description="Creates a transaction",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="type",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="category",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="amount",
+     *                     type="number"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="created_at",
+     *                     type="string",
+     *                     format="datetime"
+     *                 ),
+     *                 example={"type": "expense", "amount": "120.20", "category": 10, "created_at": "2023-05-11 08:00:00"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Success"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request"
+     *     )
+     * )
+     */
     public function create(
         Request $request,
         TransactionValidator $validator,
@@ -199,13 +402,13 @@ class TransactionsController extends AbstractController
         ]);
 
         if ($error) {
-            return $this->json(['error' => $error->getMessage()], Response::HTTP_UNAUTHORIZED);
+            return $this->json(['error' => $error->getMessage()], Response::HTTP_BAD_REQUEST);
         }
 
         $category = $categoryRepository->findOneBy(['id' => $categoryId, 'user' => $this->getUser()]);
 
         if (!$category) {
-            return $this->json(['message' => 'Category with given ID does not exist.'], Response::HTTP_UNAUTHORIZED);
+            return $this->json(['message' => 'Category with given ID does not exist.'], Response::HTTP_BAD_REQUEST);
         }
 
         $transaction = $transactionService->createTransaction(
