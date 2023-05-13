@@ -2,10 +2,6 @@ api_login_check:
     path: /api/user/login_check
     methods:  [POST]
 
-# register:
-#     path: /api/user/register
-#     controller: App\Controller\UserController::register
-#     methods: [POST]
 
 controllers:
     resource:

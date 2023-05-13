@@ -165,7 +165,7 @@ class CategoriesController extends AbstractController
         $category = $this->categoryRepository->findOneBy(['id' => $id, 'user' => $this->getUser()]);
 
         if (!$category) {
-            return $this->json(['message' => 'Category with given ID does not exist.']);
+            return $this->json(['message' => 'Category with given ID does not exist.'], Response::HTTP_BAD_REQUEST);
         }
 
         $name = $request->get('name', '');

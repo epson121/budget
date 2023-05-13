@@ -22,7 +22,7 @@ class CategoryValidator {
         $lengthConstraint = new Length(['max' => 50]);
         $lengthConstraint->maxMessage = 'Name value should have at most {{ limit }} characters.';
 
-        $alphanumConstraint = new Regex("/[a-zA-z0-9\s]*/", "Name should be an alphanumeric value");
+        $alphanumConstraint = new Regex("/^[a-zA-z0-9\s]*$/", "Name should be an alphanumeric value");
 
         $categoryDataConstraint = new Collection([
             'name' => [$alphanumConstraint, $lengthConstraint]

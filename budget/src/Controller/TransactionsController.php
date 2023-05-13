@@ -69,6 +69,7 @@ class TransactionsController extends AbstractController
                 'created_at' => $transaction->getCreatedAt(),
                 'amount' => $transaction->getAmount(),
                 'description' => $transaction->getDescription(),
+                'type' => $transaction->getType(),
                 'category' => [
                     'id' => $transaction->getCategory()->getId(),
                     'name' => $transaction->getCategory()->getName()

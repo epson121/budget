@@ -14,7 +14,7 @@ class TransactionSubscriber implements EventSubscriberInterface
         private UserRepository $userRepository
     ) {}
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             TransactionCreatedEvent::NAME => 'onTransactionCreated',

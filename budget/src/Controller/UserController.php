@@ -121,7 +121,7 @@ class UserController extends AbstractController
                 'username' => $user->getUsername(),
                 'balance' => $user->getBalance()
             ],
-            Response::HTTP_CREATED
+            Response::HTTP_OK
         );
     }
 
@@ -189,7 +189,7 @@ class UserController extends AbstractController
         
         return $this->json(
             $summary,
-            Response::HTTP_CREATED
+            Response::HTTP_OK
         );
     }
 }

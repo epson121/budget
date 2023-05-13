@@ -13,3 +13,13 @@ budget/vendor/
 budget/config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
 .vscode
+
+###> symfony/phpunit-bridge ###
+budget/.phpunit.result.cache
+budget/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+budget/phpunit.xml
+budget/.phpunit.result.cache
+###< phpunit/phpunit ###
