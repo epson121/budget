@@ -15,7 +15,7 @@ class CategoryService {
         private EntityManagerInterface $entityManager,
     ) { }
 
-       /**
+    /**
      * @param string $name
      * @return bool
      */

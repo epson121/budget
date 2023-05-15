@@ -1,0 +1,671 @@
+{
+	"info": {
+		"_postman_id": "89105983-20a2-4808-950d-781f967ce7f8",
+		"name": "Budget",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2598801"
+	},
+	"item": [
+		{
+			"name": "api/user/login_check",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"luka123\",\n    \"password\": \"password\"\n}"
+				},
+				"url": {
+					"raw": "https://app.budget.test/api/user/login_check",
+					"protocol": "https",
+					"host": [
+						"app",
+						"budget",
+						"test"
+					],
+					"path": [
+						"api",
+						"user",
+						"login_check"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/status",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODM3OTExMjAsImV4cCI6MTY4Mzc5NDcyMCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoibHVrYTEyMyJ9.RAYE1Al1B_7EyvMTb-Drg9YJogucZxCDL6J6iVXRiWDWrD8dssEq2Qm6LgJeld5jfWKUGHV_MWj3OC6VSkH-yjSTT_z9BBk6uq6PGel8OspT98eZ62CNJUB_59sdGxd2q1xIg0bEG_rnnFlnOUiHpv-Ru6wYKtFcauOg8sTg52qqoWIer7yd_blUSxW38bvRNhT9x8ggRGcig9XlmafYgE9K1_4BpMVgG4QdA2gXxrkP6GB6vGNOVmyVzdgEG4cJSCD8-gQcUCQaNPbEuQK1tNXE9R6lrcgtbqsL8JG8bJX_33_ArSPZlKStH5jAr3tV-_esAmMzDiUkf72_y_p6_g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"luka124\",\n    \"password\": \"password\",\n    \"confirm_password\": \"password\"\n}"
+				},
+				"url": {
+					"raw": "https://app.budget.test/api/user/status",
+					"protocol": "https",
+					"host": [
+						"app",
+						"budget",
+						"test"
+					],
+					"path": [
+						"api",
+						"user",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/summary",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODM3OTExMjAsImV4cCI6MTY4Mzc5NDcyMCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoibHVrYTEyMyJ9.RAYE1Al1B_7EyvMTb-Drg9YJogucZxCDL6J6iVXRiWDWrD8dssEq2Qm6LgJeld5jfWKUGHV_MWj3OC6VSkH-yjSTT_z9BBk6uq6PGel8OspT98eZ62CNJUB_59sdGxd2q1xIg0bEG_rnnFlnOUiHpv-Ru6wYKtFcauOg8sTg52qqoWIer7yd_blUSxW38bvRNhT9x8ggRGcig9XlmafYgE9K1_4BpMVgG4QdA2gXxrkP6GB6vGNOVmyVzdgEG4cJSCD8-gQcUCQaNPbEuQK1tNXE9R6lrcgtbqsL8JG8bJX_33_ArSPZlKStH5jAr3tV-_esAmMzDiUkf72_y_p6_g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://app.budget.test/api/user/summary?created_at[gte]=2023-05-11&created_at[lte]=2023-05-13",
+					"protocol": "https",
+					"host": [
+						"app",
+						"budget",
+						"test"
+					],
+					"path": [
+						"api",
+						"user",
+						"summary"
+					],
+					"query": [
+						{
+							"key": "created_at[gte]",
+							"value": "2023-05-11"
+						},
+						{
+							"key": "created_at[lte]",
+							"value": "2023-05-13"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"admin123\",\n    \"password\": \"password\",\n    \"confirm_password\": \"password\"\n}"
+				},
+				"url": {
+					"raw": "https://app.budget.test/api/user/register",
+					"protocol": "https",
+					"host": [
+						"app",
+						"budget",
+						"test"
+					],
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/categories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODM3MTczNzMsImV4cCI6MTY4MzcyMDk3Mywicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoibHVrYTEyMyJ9.FWUGeqcIQZN_xb-FwJxWCt44i4z0yOh06zG0tsZGCntoIa3swxzFdPauFTqah90gPNiEHc9LqAeToidrEzrk0UqWRcTFJCLafjL7uQDAW-FxlT2ESWwlMMQ0pPzI2QT6cb7D5KK78GrjpvIdBDIGzsMys31YqiYMfNuOuKezqqoDMdDCq4Zcl5iXImza-DIC30wAb1bhayuewEnxyeEY_rjNBG8DHmJ3UxvG23XP-vUNveKvFLYpfirEm-3qzyOxPPrS_RtL1PwtmBYkoyL_l7WeExRJuU6uAWXwxeKmV2qRY8IGTO_jH6BY1k3eVgKewI6bgy3H3XL8MsjTCpH3WA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://app.budget.test/api/categories?category_id[eq]=12",
+					"protocol": "https",
+					"host": [
+						"app",
+						"budget",
+						"test"
+					],
+					"path": [
+						"api",
+						"categories"
+					],
+					"query": [
+						{
+							"key": "category_id[eq]",
+							"value": "12"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/categories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODM3MTI3MTQsImV4cCI6MTY4MzcxNjMxNCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoibHVrYTEyMyJ9.edYkANj7cYxaFcefcHIFvaGVgbBWkj1XKkBdKfGucopEwYb_k0BA_1mXnShnBp98KNL16l7EHVj1b18HZbrroWianmFEhdhW4cHZQpSDB96fvAKA_JvmDqGkDfEDN2ugYHZ2hnrcs0F2PUYBBMhAVldjM43vauucIkENwB-JNzRsKq2K2M4Hf-eZABk44LpeMhlvxeKWl9_LO3lLXuOh74wWbp0_TQFHVoVqiC61UaQc-ipP_DFPylmMWpowYXDijG2HihPuwpiOd1-3lpioyCQq8LBaYG4UuyeEuTMV76cIaG8YAjs8ej0BF3O-cXpgPksRpFvmZepSD97RAyiW3w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://app.budget.test/api/categories/13",
+					"protocol": "https",
+					"host": [
+						"app",
+						"budget",
+						"test"
+					],
+					"path": [
+						"api",
+						"categories",
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/categories",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODM5OTcxNDUsImV4cCI6MTY4NDAwMDc0NSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoibHVrYTEyMyJ9.cdQ-Ktp4qDpcacwdl50kkQy0PrIjmU3b02nDf9-Hh41TcDMhMyqOHE9XOQrBcxE9CNeMg3ss3fKdmQESA-vwxk1I00lBeaLaDWWqc7CldDozv2fAa6OsEl2nmkJ3rLBLTi_qLqZtizDEeogHu1qS1HLORPe9zZ-uK-jBf4Y8wy1QUrbhqWtzjqvIPcOkT4Q8TVaA6ZerSYZclcPlfn8D_-3b-ExEkmm3oRAGJ0W-9GbWkKSZUaLo36gQb_c70n3EOp4mpcHA0gvlVk2UbriyE0br5mONOkgdGRfUTQ96ruWSU4B8FIS7aZeedkb2z7r1N2HfG4NqNmpcYs2H0wX5uQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"??Food4?-\"\n}"
+				},
+				"url": {
+					"raw": "https://app.budget.test/api/categories",
+					"protocol": "https",
+					"host": [
+						"app",
+						"budget",
+						"test"
+					],
+					"path": [
+						"api",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/categories/{id}",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODM2MzkyNDUsImV4cCI6MTY4MzY0Mjg0NSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoibHVrYTEyMyJ9.l-PZAZGgRXjoaVkQwFgjGV3xb-DS3PtAl9TduAyg1RgihdXiUe4p1zlMscLWcvIGly4XUmiG3UFYJfU5iGRzR1vi5v-WRKG2nwiuGY2-RX6CkYWS_9pDXI6_HR2PDqE_96nko37LqBskJCF1qM7robYRSG2ua4NBIAe7A65E2ZrqSvXN8BQIUNNoSz8CwDA5bmQdO3n5bx-XLkHwoF9st1qn9PvxHrgu3fF10sBFYvRAkKcfrj6y4BVB6od9N5rwGUD2xSqCjt2-XgVOxEpuhR-e6zl3qT5rBdYb8th7dQb62P3KOYXLt2XjYrgog108WDfRilt_oWFgdHad3pyl1g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Rename123\"\n}"
+				},
+				"url": {
+					"raw": "https://app.budget.test/api/categories/4",
+					"protocol": "https",
+					"host": [
+						"app",
+						"budget",
+						"test"
+					],
+					"path": [
+						"api",
+						"categories",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/categories/{id}",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODM2MzkyNDUsImV4cCI6MTY4MzY0Mjg0NSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoibHVrYTEyMyJ9.l-PZAZGgRXjoaVkQwFgjGV3xb-DS3PtAl9TduAyg1RgihdXiUe4p1zlMscLWcvIGly4XUmiG3UFYJfU5iGRzR1vi5v-WRKG2nwiuGY2-RX6CkYWS_9pDXI6_HR2PDqE_96nko37LqBskJCF1qM7robYRSG2ua4NBIAe7A65E2ZrqSvXN8BQIUNNoSz8CwDA5bmQdO3n5bx-XLkHwoF9st1qn9PvxHrgu3fF10sBFYvRAkKcfrj6y4BVB6od9N5rwGUD2xSqCjt2-XgVOxEpuhR-e6zl3qT5rBdYb8th7dQb62P3KOYXLt2XjYrgog108WDfRilt_oWFgdHad3pyl1g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://app.budget.test/api/categories/10",
+					"protocol": "https",
+					"host": [
+						"app",
+						"budget",
+						"test"
+					],
+					"path": [
+						"api",
+						"categories",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/transactions/{id}",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODM2NDQzNjIsImV4cCI6MTY4MzY0Nzk2Miwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoibHVrYTEyMyJ9.pXS5WrBQS2VCpAZquqtAQX9HFefo1YB8XVnv8DkliPzJGmgH3YRTmKO4D-92LxaJEHqhlnQt1WOXlvQ8T1M9jWggQWODZYkdPTqvCtfRpzGOaSZOZPLlmcgXwjOVJSwW68s7JIeL6KJm7wFBnLCU3kQe8t2ORqbOyR3tLgylBxQ0M798BgtzKg57X04ux6772jBkmmXNrjSeUrqQ1AzEDpm06OVSMagwy7ECbiZVED74OVnRSdiWXT_zLFAfRHOxViQFEk1ranZbqUgfXyOMR-6zZCVrJa3JG-weVLZFXlvN0-m11qsnSpEdSfLHvfGQp9DVcjM_YoDdpNXG76O_eA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://app.budget.test/api/transactions/2",
+					"protocol": "https",
+					"host": [
+						"app",
+						"budget",
+						"test"
+					],
+					"path": [
+						"api",
+						"transactions",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/transactions",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODQxNDA4NTEsImV4cCI6MTY4NDE0NDQ1MSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoibHVrYTEyMyJ9.Zg4syJaJzp9sVyMEabz7wOy7AEOkK7sYlSjz7jcHph7Z2PpRba27YF7c-Ea_wBkVDNBAYp6SX8645pdpbq6q3pQg0B8ZxwnBtEWq7xKEDMXqkbmqdqBl-JdfP19B7H-Zg7HuhwJaTMD2sHfoBPpQKaFTZgEoedySKdkSY8daYA2XfMokVAP3evGBopNwvOtJZzuqvil-ogCb8B03YpLnxWl1slQdivISCGIO4_JKPnIF0xJzrIbKPmlgUdlferY_uRRpPl64EoUJYiJ2O3uZOY-rqO7Lds1XfUIWyVNdaVMgT5vYT0HpPYwjx0ZtCaG-P-TxBXvY2vvjT9LHrseTuA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://app.budget.test/api/transactions?created_at[gt]=2023-04-23&created_at[lt]=2024-04-22&orderBy[amount]=ASC",
+					"protocol": "https",
+					"host": [
+						"app",
+						"budget",
+						"test"
+					],
+					"path": [
+						"api",
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "created_at[gt]",
+							"value": "2023-04-23"
+						},
+						{
+							"key": "created_at[lt]",
+							"value": "2024-04-22"
+						},
+						{
+							"key": "orderBy[amount]",
+							"value": "ASC"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/transactions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODM5OTcxNDUsImV4cCI6MTY4NDAwMDc0NSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoibHVrYTEyMyJ9.cdQ-Ktp4qDpcacwdl50kkQy0PrIjmU3b02nDf9-Hh41TcDMhMyqOHE9XOQrBcxE9CNeMg3ss3fKdmQESA-vwxk1I00lBeaLaDWWqc7CldDozv2fAa6OsEl2nmkJ3rLBLTi_qLqZtizDEeogHu1qS1HLORPe9zZ-uK-jBf4Y8wy1QUrbhqWtzjqvIPcOkT4Q8TVaA6ZerSYZclcPlfn8D_-3b-ExEkmm3oRAGJ0W-9GbWkKSZUaLo36gQb_c70n3EOp4mpcHA0gvlVk2UbriyE0br5mONOkgdGRfUTQ96ruWSU4B8FIS7aZeedkb2z7r1N2HfG4NqNmpcYs2H0wX5uQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"category\": 17,\n    \"created_at\": \"2024-04-23 18:25:22\",\n    \"amount\": \"10\",\n    \"type\": \"deposit\",\n    \"description\": \"some description\"\n}"
+				},
+				"url": {
+					"raw": "https://app.budget.test/api/transactions",
+					"protocol": "https",
+					"host": [
+						"app",
+						"budget",
+						"test"
+					],
+					"path": [
+						"api",
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/transactions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODM3MjEwMzUsImV4cCI6MTY4MzcyNDYzNSwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoibHVrYTEyMyJ9.NSzedcnJhIGBAAwaD_S3JYVquDKDg7SXFtGI7Icxwxrzik1O4dF1J_LDPLxp5OQAz0TQMbrv8waH9eZ3K1qu2tRxeK9d3JIKR9pCYqBL1O5DUGC3G04RvbcExLuCty4sLxNI05CFRlnrbEHUMXYKbwYtzOxhkyGApRjfaUiq2p3aJeM24qQJPriBg5vcipUVxdTs0c3_SRelN0JJwMyUywtdxQqF0jY06RnmLYfyjo_QjwdONN_hP4j78LBUEjg3gr5u9iTqvaISiABL67zueG7YCnOGRjkI9ZSt4TDU6rH5dcAvrkZj2ZY9OU5fJKDQ8cH3384uKKB7X1aEGSd3BQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"type\": \"deposit\"\n}"
+				},
+				"url": {
+					"raw": "https://app.budget.test/api/transactions/25",
+					"protocol": "https",
+					"host": [
+						"app",
+						"budget",
+						"test"
+					],
+					"path": [
+						"api",
+						"transactions",
+						"25"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/transactions",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODM3MTI3MTQsImV4cCI6MTY4MzcxNjMxNCwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJuYW1lIjoibHVrYTEyMyJ9.edYkANj7cYxaFcefcHIFvaGVgbBWkj1XKkBdKfGucopEwYb_k0BA_1mXnShnBp98KNL16l7EHVj1b18HZbrroWianmFEhdhW4cHZQpSDB96fvAKA_JvmDqGkDfEDN2ugYHZ2hnrcs0F2PUYBBMhAVldjM43vauucIkENwB-JNzRsKq2K2M4Hf-eZABk44LpeMhlvxeKWl9_LO3lLXuOh74wWbp0_TQFHVoVqiC61UaQc-ipP_DFPylmMWpowYXDijG2HihPuwpiOd1-3lpioyCQq8LBaYG4UuyeEuTMV76cIaG8YAjs8ej0BF3O-cXpgPksRpFvmZepSD97RAyiW3w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://app.budget.test/api/transactions/11",
+					"protocol": "https",
+					"host": [
+						"app",
+						"budget",
+						"test"
+					],
+					"path": [
+						"api",
+						"transactions",
+						"11"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -15,7 +15,7 @@ class UserSubscriber implements EventSubscriberInterface
         private CategoryFixtures $categoryFixtures
     ) {}
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             UserCreatedEvent::NAME => 'onUserCreated',

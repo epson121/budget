@@ -245,8 +245,8 @@ class TransactionsController extends AbstractController
     #[Route('/api/transactions', name: 'api_transactions_get_all', methods: ["GET"])]
     /**
      * @OA\Get(
-     *     summary="Gets category information",
-     *     description="Gets category information",
+     *     summary="Gets transaction information",
+     *     description="Gets transaction information",
      *     @OA\Parameter(
      *         name="created_at",
      *         in="query",
